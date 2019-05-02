@@ -76,6 +76,9 @@ laddspencer.twitch.connected
 ```
 Subscribe to any of these channels with your favorite Redis client.
 
+### Follower Events
+You might be saying to yourself "how do I get events for new follows?"...the bad news is that Twitch does not provide this over the chat interface, so it's not currently possible with this package. The good news is that **Streamlabs** does provide this, and we've written a peer module, [streamlabs-redis-bridge](https://github.com/laddspencer/streamlabs-redis-bridge), that supports follows and donations.
+
 ## Talking Back
 In addition to publishing events, we can also forward Redis messages to chat. We do this by listening on the "chatter" channel and sending any text to the [tmi.js say()](https://docs.tmijs.org/v1.4.2/Commands.html#say) command.
 
