@@ -54,15 +54,15 @@ Options:
 ```
 
 ## First Run
-Since Redis is a fundamental part of this package, we take advantage of the fact that we can easily write data to, and read data from this server. The items cached in Redis are the Twitch OAuth Access Token and Refresh Token. These are used each time your bot connects to chat (i.e. every time you run this script). The tokens are initially obtained by following the authorization procedure [here](https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#oauth-authorization-code-flow). Once you grant your bot access, you will receive an Authorization Code; this code is fed to the script on the command-line with the **-c** option. After a successful connection, the Access and Refresh Tokens will be cached in Redis and automatically refreshed as needed; you should never have to use the **-c** option after this.
+Since Redis is a fundamental part of this package, we take advantage of the fact that we can easily write data to, and read data from this server. The items cached in Redis are the Twitch OAuth Access Token and Refresh Token. These are used each time your bot connects to chat (i.e. every time you run this script). The tokens are initially obtained by following the authorization procedure [here](https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#oauth-authorization-code-flow). Once you grant your bot access, you will receive an Authorization Code; this code is fed to the script on the command-line with the **-c** option. After a successful connection, the Access and Refresh Tokens will be cached in Redis and automatically refreshed as needed; you should never have to use the **-c** option after this (unless the tokens are removed from the Redis cache somehow).
 
 
 ## Pub/Sub Events
-Our interface to Twitch is [tmi.js](https://www.npmjs.com/package/tmi.js). Events from Twitch chat (e.g. "Message", "Cheer", "Subscription", etc) are sent to us via tmi.js. We translate these events into messages that are published on a Redis pub/sub channel. Channel names are of the form:
+Our interface to Twitch is [tmi.js](https://www.npmjs.com/package/tmi.js). Events from Twitch chat (e.g. "Message", "Cheer", "Subscription", etc) are sent to us via **tmi.js**. We translate these events into messages that are published on a Redis pub/sub channel. Channel names are of the form:
 
 *<channel_prefix>*.twitch.*<event_name>*
 
-Where *channel_prefix* is defined in the config file, and *event_name* is one of the events listed in the [tmi docs](https://docs.tmijs.org/v1.4.2/Events.html). For example, using the config above, the channel names would be:
+Where *channel_prefix* is defined in the config file, and *event_name* is one of the events listed in the [tmi.js docs](https://docs.tmijs.org/v1.4.2/Events.html). For example, using the config above, the channel names would be:
 
 ```
 laddspencer.twitch.action
@@ -76,12 +76,19 @@ laddspencer.twitch.connected
 ```
 Subscribe to any of these channels with your favorite Redis client.
 
+### Follower Events
+You might be saying to yourself "how do I get events for new follows?"...the bad news is that Twitch does not provide this over the chat interface, so it's not currently possible with this package. The good news is that **Streamlabs** does provide this, and we've written a peer module, [streamlabs-redis-bridge](https://github.com/laddspencer/streamlabs-redis-bridge), that supports follows and donations.
+
 ## Talking Back
-In addition to publishing events, we can also forward Redis messages to chat. We do this by listening on the "chatter" channel and sending any text to the [tmi say()](https://docs.tmijs.org/v1.4.2/Commands.html#say) command.
+In addition to publishing events, we can also forward Redis messages to chat. We do this by listening on the "chatter" channel and sending any text to the [tmi.js say()](https://docs.tmijs.org/v1.4.2/Commands.html#say) command.
 
 *<channel_prefix>*.chatter.say
 
+Where, as above, *channel_prefix* is defined in the config file. For example, after **twitch-redis-bridge** is up and running, connect to the same Redis server and publish a message like this:
 
 ```
+$ nc localhost 6379
 publish laddspencer.chatter.say "Hello, World!"
 ```
+The message will be forwarded through Redis to **twitch-redis-bridge**, which will send it through **tmi.js** to Twitch Chat:
+![Twitch Chat Hello World](https://github.com/laddspencer/twitch-redis-bridge/blob/master/hello_world.png "Twitch Chat")
