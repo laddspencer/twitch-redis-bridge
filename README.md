@@ -36,6 +36,18 @@ A sample config file ([config_sample.json](https://github.com/laddspencer/twitch
 - credPath: path to the file containing credentials for *tmi.username*.
 
 ## Credentials
+A sample creds file ([creds_example.json](https://github.com/laddspencer/twitch-redis-bridge/blob/master/creds_example.json)) is included in the source tree; use this as the basis for your own.
+```
+{
+"client_id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+"client_secret": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+}
+```
+*client_id* and *client_secret* come from the Twitch bot/app registration process [here](https://dev.twitch.tv/docs/authentication/#registration). This package assumes you already have or can obtain these creds. Once you have them, simple plug them into your creds file.
+
+## First Run
+Since Redis is a fundamental part of this package, we take advantage of the fact that we can easily store and retrieve a few items there. The items stored are the Twitch OAuth Access/Refresh Tokens. These are used each time your bot connects to chat (i.e. every time you run this script). The tokens are obtained by following the authorization procedure [here](https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#oauth-authorization-code-flow). Once you grant our bot access, you will receive an Authorization Code; this code is fed to the script on the command-line with the **-c** option.
+
 
 When run from the command-line, the following options are available:
 ```
