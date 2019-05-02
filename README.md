@@ -62,5 +62,16 @@ Our interface to Twitch is [tmi.js](https://www.npmjs.com/package/tmi.js). Event
 
 *<channel_prefix>*.twitch.*<event_name>*
 
-...where channel_prefix is defined in the config file, and event name is one of the events listed in the [tmi docs](https://docs.tmijs.org/v1.4.2/Events.html).
+Where *channel_prefix* is defined in the config file, and *event_name* is one of the events listed in the [tmi docs](https://docs.tmijs.org/v1.4.2/Events.html). For example, using the config above, the channel names would be:
+
+```
+laddspencer.twitch.action
+laddspencer.twitch.anongiftpaidupgrade
+laddspencer.twitch.ban
+laddspencer.twitch.chat
+laddspencer.twitch.cheer
+laddspencer.twitch.clearchat
+laddspencer.twitch.connected
+...
+```
 
