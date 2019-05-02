@@ -74,4 +74,14 @@ laddspencer.twitch.clearchat
 laddspencer.twitch.connected
 ...
 ```
+Subscribe to any of these channels with your favorite Redis client.
 
+## Talking Back
+In addition to publishing events, we can also forward Redis messages to chat. We do this by listening on the "chatter" channel and sending any text to the [tmi say()](https://docs.tmijs.org/v1.4.2/Commands.html#say) command.
+
+*<channel_prefix>*.chatter.say
+
+
+```
+publish laddspencer.chatter.say "Hello, World!"
+```
