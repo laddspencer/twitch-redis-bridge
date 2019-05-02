@@ -81,7 +81,10 @@ In addition to publishing events, we can also forward Redis messages to chat. We
 
 *<channel_prefix>*.chatter.say
 
+Where, as above, *channel_prefix* is defined in the config file. For example:
 
 ```
 publish laddspencer.chatter.say "Hello, World!"
 ```
+
+![Twitch Chat Hello World](https://github.com/laddspencer/twitch-redis-bridge/blob/master/hello_world.png "Twitch Chat")
