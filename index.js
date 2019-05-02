@@ -14,17 +14,18 @@ const util = require('util');
 const log = require('fancy-log');
 const TwitchEventPublisher = require('./event_publisher');
 const TwitchChatter = require('./twitch_chatter');
-const Handshaker = require('./handshaker');
 
 // Twitch Auth Util (tau)
 const tau = require('twitch-auth');
 
 const defaultConfigPath = 'config.json';
 const defaultConfig = {
-  credsPath: './creds.json',
   redis: {
     hostname: 'localhost',
     port: '6379'
+  },
+  tmi: {
+    creds_path: './creds.json',
   }
 };
 
@@ -236,8 +237,7 @@ function serve(config, creds, publisher, response) {
   let twitchChannel = config['tmi']['channels'][0];
   let chatter = new TwitchChatter(twitchClient, twitchChannel, config.redis.hostname,
                                   config.redis.port, config.redis.channel_prefix);
-  let handshaker = new Handshaker(config, twitchClient);
-
+  
   // Register our own disconnect handler so we can reconnect.
   twitchClient.on("disconnected", onDisconnectedHandler);
   
@@ -329,7 +329,7 @@ function reqLaunch(launchArg) {
 }
 
 function launch(config) {
-  let creds = getCreds(config.credsPath);
+  let creds = getCreds(config.creds_path);
   let publisher = new TwitchEventPublisher(config.redis.hostname, config.redis.port,
                                            config.redis.channel_prefix);
   

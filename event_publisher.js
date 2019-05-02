@@ -8,7 +8,7 @@ const redis = require("redis");
 // Maps Twitch events to Redis channels.
 module.exports = class TwitchEventPublisher {
   constructor(redisHost, redisPort, channelPrefix) {
-    this.twitchChannelPrefix = `${channelPrefix}.twitch`;
+    this.twitchChannelPrefix = (!channelPrefix)?('twitch'):(`${channelPrefix}.twitch`);
     this.handlerMap = {
       'action': this.onActionHandler.bind(this),
       'anongiftpaidupgrade': this.onAnongiftpaidupgradeHandler.bind(this),

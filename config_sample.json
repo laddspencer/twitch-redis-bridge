@@ -1,14 +1,14 @@
 {
-  "tmi": {
-    "channels": [
-      "laddspencer"
-    ],
-    "username": "phantsbot"
-  },
   "redis": {
     "hostname": "localhost",
     "port": 6379,
     "channel_prefix": "laddspencer"
   },
-  "credsPath": "/path/to/creds.json"
+  "tmi": {
+    "channels": [
+      "laddspencer"
+    ],
+    "username": "phantsbot",
+    "creds_path": "/path/to/creds.json"
+  }
 }
