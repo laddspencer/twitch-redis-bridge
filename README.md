@@ -12,28 +12,28 @@ There are a few configuration options that must be specified before the package 
 A sample config file ([config_sample.json](https://github.com/laddspencer/twitch-redis-bridge/blob/master/config_sample.json)) is include in the source tree; use this as the basis for your own.
 ```
 {
-  "tmi": {
-    "channels": [
-      "laddspencer"
-    ],
-    "username": "phantsbot"
-  },
   "redis": {
     "hostname": "localhost",
     "port": 6379,
     "channel_prefix": "laddspencer"
   },
-  "credsPath": "/path/to/twitch_creds.json"
+  "tmi": {
+    "channels": [
+      "laddspencer"
+    ],
+    "username": "phantsbot",
+    "creds_path": "/path/to/creds.json"
+  }
 }
 ```
-- tmi
-  - channels: the list of Twitch chat channels the bot will connect to.
-  - username: the account name of the bot. You can use your own Twitch ID or create a new one to serve as the bot. Any text sent to chat by the bot will come from this username. Also note: the credentials provided below will be for *this* account (i.e. it is unrelated to the accounts listed in *tmi.channels* ).
 - redis
   - hostname: the hostname or IP address of the Redis server; the default is **localhost** (127.0.0.1).
   - port: the port on which the Redis server is listening. By default, Redis listens on **6379**.
   - channel_prefix: prefixed used when publishing Redis messages. For example, in this configration, chat messages will be published on a channel called **laddspencer.twitch.message**.
-- credPath: path to the file containing credentials for *tmi.username*.
+- tmi
+  - channels: the list of Twitch chat channels the bot will connect to.
+  - username: the account name of the bot. You can use your own Twitch ID or create a new one to serve as the bot. Any text sent to chat by the bot will come from this username. Also note: the credentials provided below will be for *this* account (i.e. it is unrelated to the accounts listed in *tmi.channels* ).
+  - creds_path: path to the file containing credentials for *tmi.username*.
 
 ## Credentials
 A sample creds file ([creds_example.json](https://github.com/laddspencer/twitch-redis-bridge/blob/master/creds_example.json)) is included in the source tree; use this as the basis for your own.
