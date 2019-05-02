@@ -58,5 +58,8 @@ Since Redis is a fundamental part of this package, we take advantage of the fact
 
 
 ## Pub/Sub Events
-Our interface to Twitch is [tmi.js](https://www.npmjs.com/package/tmi.js). Events from Twitch chat (e.g. "Message", "Cheer", "Subscription", etc) are sent to us via tmi.js. We translate these events into messages that are published on a Redis pub/sub channel. Channel names are of the form: <channel_prefix>.twitch.<event_name>, where channel_prefix is defined in the config file, and event name is one of the events listed in the [tmi docs](https://docs.tmijs.org/v1.4.2/Events.html).
+Our interface to Twitch is [tmi.js](https://www.npmjs.com/package/tmi.js). Events from Twitch chat (e.g. "Message", "Cheer", "Subscription", etc) are sent to us via tmi.js. We translate these events into messages that are published on a Redis pub/sub channel. Channel names are of the form:
+   <channel_prefix>.twitch.<event_name>
+
+...where channel_prefix is defined in the config file, and event name is one of the events listed in the [tmi docs](https://docs.tmijs.org/v1.4.2/Events.html).
 
