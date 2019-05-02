@@ -45,9 +45,6 @@ A sample creds file ([creds_example.json](https://github.com/laddspencer/twitch-
 ```
 *client_id* and *client_secret* come from the Twitch bot/app registration process [here](https://dev.twitch.tv/docs/authentication/#registration). This package assumes you already have or can obtain these creds. Once you have them, simply plug them into your creds file.
 
-## First Run
-Since Redis is a fundamental part of this package, we take advantage of the fact that we can easily store and retrieve items from there. The items stored are the Twitch OAuth Access/Refresh Tokens. These are used each time your bot connects to chat (i.e. every time you run this script). The tokens are initially obtained by following the authorization procedure [here](https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#oauth-authorization-code-flow). Once you grant your bot access, you will receive an Authorization Code; this code is fed to the script on the command-line with the **-c** option. After a successful connection, the Access and Refresh Tokens will be cached in Redis and automatically refreshed as needed; you should never have to use the **-c** option after this.
-
 ## Command-line Options
 When run from the command-line, the following options are available:
 ```
@@ -55,3 +52,11 @@ Options:
   -c authcode         OAuth Authorization Code (only needed for first time setup.)
   -F configfile       Configuration file path.
 ```
+
+## First Run
+Since Redis is a fundamental part of this package, we take advantage of the fact that we can easily write data to, and read data from this server. The items cached in Redis are the Twitch OAuth Access Token and Refresh Token. These are used each time your bot connects to chat (i.e. every time you run this script). The tokens are initially obtained by following the authorization procedure [here](https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#oauth-authorization-code-flow). Once you grant your bot access, you will receive an Authorization Code; this code is fed to the script on the command-line with the **-c** option. After a successful connection, the Access and Refresh Tokens will be cached in Redis and automatically refreshed as needed; you should never have to use the **-c** option after this.
+
+
+## Pub/Sub Events
+Our interface to Twitch is [tmi.js](https://www.npmjs.com/package/tmi.js). Events from Twitch chat (e.g. "Message", "Cheer", "Subscription", etc) are sent to us via tmi.js. We translate these events into messages that are published on a Redis pub/sub channel. Channel names are of the form: <channel_prefix>.twitch.<event_name>, where channel_prefix is defined in the config file, and event name is one of the events listed in the [tmi docs](https://docs.tmijs.org/v1.4.2/Events.html).
+
