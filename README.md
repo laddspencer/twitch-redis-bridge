@@ -54,7 +54,7 @@ Options:
 ```
 
 ## First Run
-Since Redis is a fundamental part of this package, we take advantage of the fact that we can easily write data to, and read data from this server. The items cached in Redis are the Twitch OAuth Access Token and Refresh Token. These are used each time your bot connects to chat (i.e. every time you run this script). The tokens are initially obtained by following the authorization procedure [here](https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#oauth-authorization-code-flow). Once you grant your bot access, you will receive an Authorization Code; this code is fed to the script on the command-line with the **-c** option. After a successful connection, the Access and Refresh Tokens will be cached in Redis and automatically refreshed as needed; you should never have to use the **-c** option after this.
+Since Redis is a fundamental part of this package, we take advantage of the fact that we can easily write data to, and read data from this server. The items cached in Redis are the Twitch OAuth Access Token and Refresh Token. These are used each time your bot connects to chat (i.e. every time you run this script). The tokens are initially obtained by following the authorization procedure [here](https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#oauth-authorization-code-flow). Once you grant your bot access, you will receive an Authorization Code; this code is fed to the script on the command-line with the **-c** option. After a successful connection, the Access and Refresh Tokens will be cached in Redis and automatically refreshed as needed; you should never have to use the **-c** option after this (unless the tokens are removed from the Redis cache somehow).
 
 
 ## Pub/Sub Events
