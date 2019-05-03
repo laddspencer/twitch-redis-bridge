@@ -9,7 +9,7 @@ Twitch/Redis integration is required.
 
 ## Configuration
 There are a few configuration options that must be specified before the package can operate properly.
-A sample config file ([config_sample.json](https://github.com/laddspencer/twitch-redis-bridge/blob/master/config_sample.json)) is include in the source tree; use this as the basis for your own.
+A sample config file ([config_sample.json](https://github.com/laddspencer/twitch-redis-bridge/blob/master/config_sample.json)) is included in the source tree; use this as the basis for your own.
 ```
 {
   "redis": {
